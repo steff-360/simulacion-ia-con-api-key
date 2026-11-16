@@ -165,11 +165,15 @@ Reglas fundamentales:
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`\n========================================`);
-  console.log(`           ✨ ISA Chat Activa ✨         `);
-  console.log(`========================================`);
-  console.log(` Servidor activo en: http://localhost:${PORT}`);
-  console.log(` Todo listo para conversar con ISA.`);
-  console.log(`========================================\n`);
-});
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`\n========================================`);
+    console.log(`           ✨ ISA Chat Activa ✨         `);
+    console.log(`========================================`);
+    console.log(` Servidor activo en: http://localhost:${PORT}`);
+    console.log(` Todo listo para conversar con ISA.`);
+    console.log(`========================================\n`);
+  });
+}
+
+module.exports = app;
