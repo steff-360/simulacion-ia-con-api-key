@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ISA — Tu Asistente IA</title>
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Highlight.js for Code Highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <!-- Marked.js for Markdown Rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <button class="new-chat-btn" id="newChatBtn">
+          <i class="ph-bold ph-plus"></i>
+          <span>Nuevo chat</span>
+        </button>
+        <button class="sidebar-toggle-btn" id="sidebarCollapseBtn" title="Cerrar barra lateral">
+          <i class="ph-bold ph-sidebar"></i>
+        </button>
+      </div>
+
+      <div class="chats-history-label">Tus conversaciones</div>
+      <div class="chats-history-list" id="chatsHistoryList">
+        <!-- Generado dinámicamente -->
+      </div>
+
+      <div class="sidebar-footer">
+        <button class="footer-btn" id="openSettingsBtn">
+          <i class="ph-bold ph-gear"></i>
+          <span>Ajustes</span>
+        </button>
+        <div class="user-profile-badge">
+          <div class="profile-avatar">S</div>
+          <div class="profile-info">
+            <span class="profile-name">Stefani</span>
+            <span class="profile-sub">ISA Pro</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn" title="Menú">
+            <i class="ph-bold ph-list"></i>
+          </button>
+          <div class="model-badge-container">
+            <button class="model-selector-btn" id="modelSelectorBtn">
+              <span class="model-icon"><i class="ph-bold ph-sparkle"></i></span>
+              <span id="currentModelLabel">ISA v3.5</span>
+              <i class="ph-bold ph-caret-down"></i>
+            </button>
+            <div class="dropdown-menu" id="modelDropdown">
+              <div class="dropdown-item active" data-model="gemini-3.5-flash-lite">
+                <div class="dropdown-item-title">ISA v3.5</div>
+                <div class="dropdown-item-desc">Ultrarrápida, inteligente y eficiente</div>
+              </div>
+              <div class="dropdown-item" data-model="gemini-3.5-flash">
+                <div class="dropdown-item-title">ISA Turbo</div>
+                <div class="dropdown-item-desc">Mayor precisión y capacidades avanzadas</div>
+              </div>
+              <div class="dropdown-item" data-model="gemini-3.8-flash">
+                <div class="dropdown-item-title">ISA Plus</div>
+                <div class="dropdown-item-desc">Versión de última generación</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="top-bar-right">
+          <button class="icon-btn" id="clearChatBtn" title="Limpiar conversación actual">
+            <i class="ph-bold ph-trash"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Chat Scrollable Feed -->
+      <div class="chat-feed" id="chatFeed">
+        <!-- Welcome Screen (Visible when no messages) -->
+        <div class="welcome-container" id="welcomeScreen">
+          <div class="isa-logo-circle">
+            <i class="ph-fill ph-sparkle"></i>
+          </div>
+          <h1 class="welcome-title">¿En qué puedo ayudarte hoy?</h1>
+          <p class="welcome-subtitle">Soy <strong>ISA</strong>, tu asistente inteligente.</p>
+
+          <div class="prompt-suggestions">
+            <div class="suggestion-card" data-prompt="Explícame cómo funciona la computación cuántica de forma sencilla">
+              <div class="suggestion-icon"><i class="ph-bold ph-lightbulb"></i></div>
+              <div class="suggestion-text">
+                <div class="suggestion-title">Explicar concepto</div>
+                <div class="suggestion-desc">Computación cuántica de forma sencilla</div>
+              </div>
+            </div>
+
+            <div class="suggestion-card" data-prompt="Escribe una función en JavaScript para ordenar un array de objetos por fecha">
+              <div class="suggestion-icon"><i class="ph-bold ph-code"></i></div>
+              <div class="suggestion-text">
+                <div class="suggestion-title">Escribir código</div>
+                <div class="suggestion-desc">Función JavaScript para ordenar por fecha</div>
+              </div>
+            </div>
+
+            <div class="suggestion-card" data-prompt="Ayúdame a redactar un correo formal para solicitar una reunión de proyecto">
+              <div class="suggestion-icon"><i class="ph-bold ph-envelope"></i></div>
+              <div class="suggestion-text">
+                <div class="suggestion-title">Redactar correo</div>
+                <div class="suggestion-desc">Solicitud formal para reunión de proyecto</div>
+              </div>
+            </div>
+
+            <div class="suggestion-card" data-prompt="Dame 5 ideas creativas e innovadoras para una aplicación web">
+              <div class="suggestion-icon"><i class="ph-bold ph-rocket-launch"></i></div>
+              <div class="suggestion-text">
+                <div class="suggestion-title">Lluvia de ideas</div>
+                <div class="suggestion-desc">5 ideas para una aplicación web moderna</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Messages list container -->
+        <div class="messages-container" id="messagesContainer"></div>
+      </div>
+
+      <!-- Bottom Chat Input Area -->
+      <div class="input-area-container">
+        <form class="input-box-wrapper" id="chatForm">
+          <textarea
+            id="messageInput"
+            rows="1"
+            placeholder="Pregúntale lo que quieras a ISA..."
+            autocomplete="off"
+          ></textarea>
+
+          <div class="input-actions">
+            <button type="submit" class="send-btn" id="sendBtn" disabled title="Enviar mensaje">
+              <i class="ph-bold ph-arrow-up"></i>
+            </button>
+            <button type="button" class="stop-btn hidden" id="stopBtn" title="Detener respuesta">
+              <i class="ph-fill ph-stop"></i>
+            </button>
+          </div>
+        </form>
+
+        <div class="input-disclaimer">
+          ISA puede cometer errores. Considera verificar la información importante.
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay hidden" id="settingsModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="ph-bold ph-gear"></i>
+          <span>Ajustes de ISA</span>
+        </div>
+        <button class="icon-btn" id="closeSettingsBtn"><i class="ph-bold ph-x"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="modalModelSelect">Modo de ISA:</label>
+          <select id="modalModelSelect">
+            <option value="gemini-3.5-flash-lite">ISA v3.5 (Rápida y recomendada)</option>
+            <option value="gemini-3.5-flash">ISA Turbo (Avanzada)</option>
+            <option value="gemini-3.8-flash">ISA Plus (Nueva generación)</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-top: 10px;">
+          <button class="btn btn-secondary" id="deleteAllChatsBtn" style="color: #ef4444; border-color: rgba(239, 68, 68, 0.3);">
+            <i class="ph-bold ph-trash"></i> Borrar todo el historial de chats
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="saveSettingsBtn">Listo</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
